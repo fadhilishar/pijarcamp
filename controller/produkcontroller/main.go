@@ -37,10 +37,16 @@ func Index(res http.ResponseWriter, req *http.Request) {
 			filterProduk.Nama = &nama
 		}
 
-		jumlahStr := queryString.Get("jumlah")
-		if jumlahStr != "" {
-			jumlah, _ := strconv.Atoi(jumlahStr)
-			filterProduk.Jumlah = &jumlah
+		jumlahMinStr := queryString.Get("jumlahMin")
+		if jumlahMinStr != "" {
+			jumlahMin, _ := strconv.Atoi(jumlahMinStr)
+			filterProduk.JumlahMin = &jumlahMin
+		}
+
+		jumlahMaxStr := queryString.Get("jumlahMax")
+		if jumlahMaxStr != "" {
+			jumlahMax, _ := strconv.Atoi(jumlahMaxStr)
+			filterProduk.JumlahMax = &jumlahMax
 		}
 
 		hargaMinStr := queryString.Get("hargaMin")

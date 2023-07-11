@@ -9,7 +9,7 @@ import (
 	"github.com/fadhilishar/pijarcamp/entity"
 )
 
-var countReq = 0
+// var countReq = 0
 
 type ProdukFilter struct {
 	ID         *int
@@ -17,7 +17,8 @@ type ProdukFilter struct {
 	Keterangan *string
 	HargaMin   *int
 	HargaMax   *int
-	Jumlah     *int
+	JumlahMin  *int
+	JumlahMax  *int
 	Sort       *string
 }
 
@@ -78,8 +79,12 @@ func (p *ProdukModel) FindAll(filter ProdukFilter) (res []entity.Produk, err err
 		// args = append(args, filter.HargaMax)
 	}
 
-	if filter.Jumlah != nil {
-		mapFieldToValue["jumlah"] = *filter.Jumlah
+	if filter.JumlahMin != nil {
+		mapFieldToValue["jumlahMin"] = *filter.JumlahMin
+	}
+
+	if filter.JumlahMax != nil {
+		mapFieldToValue["jumlahMax"] = *filter.JumlahMax
 	}
 
 	// }
@@ -107,8 +112,14 @@ func (p *ProdukModel) FindAll(filter ProdukFilter) (res []entity.Produk, err err
 				// query += "nama regexp '?'"
 				// fmt.Println("VALUE", value)
 				query += fmt.Sprintf("nama regexp '%v'", value)
-			default:
-				query += fmt.Sprintf("%v=?", field)
+			case "jumlahMin":
+				query += "jumlah>=?"
+				args = append(args, value)
+			case "jumlahMax":
+				query += "jumlah<=?"
+				args = append(args, value)
+			case "id":
+				query += "id=?"
 				args = append(args, value)
 			}
 			// if field == "hargaMin" {
@@ -135,14 +146,14 @@ func (p *ProdukModel) FindAll(filter ProdukFilter) (res []entity.Produk, err err
 		// mapFieldToValue["order by"] = fields[0] + " " + fields[1]
 		// args = append(args, fields[0], fields[1])
 	}
-	countReq++
+	// countReq++
 	// fmt.Println()
 	// fmt.Println("REQUEST KE ", countReq)
 	// fmt.Println()
-	// fmt.Println("FILTER", filter)
-	// fmt.Println("MAPFIELDTOVALUE", mapFieldToValue)
-	// fmt.Println("QUERY ", query)
-	// fmt.Println("ARGS", args)
+	fmt.Println("FILTER", filter)
+	fmt.Println("MAPFIELDTOVALUE", mapFieldToValue)
+	fmt.Println("QUERY ", query)
+	fmt.Println("ARGS", args)
 	var rows *sql.Rows
 	rows, err = p.conn.Query(query, args...)
 	if err != nil {
