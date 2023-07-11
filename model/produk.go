@@ -150,10 +150,10 @@ func (p *ProdukModel) FindAll(filter ProdukFilter) (res []entity.Produk, err err
 	// fmt.Println()
 	// fmt.Println("REQUEST KE ", countReq)
 	// fmt.Println()
-	fmt.Println("FILTER", filter)
-	fmt.Println("MAPFIELDTOVALUE", mapFieldToValue)
-	fmt.Println("QUERY ", query)
-	fmt.Println("ARGS", args)
+	// fmt.Println("FILTER", filter)
+	// fmt.Println("MAPFIELDTOVALUE", mapFieldToValue)
+	// fmt.Println("QUERY ", query)
+	// fmt.Println("ARGS", args)
 	var rows *sql.Rows
 	rows, err = p.conn.Query(query, args...)
 	if err != nil {
