@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Pijarcamp: Tugas 10 Produk</title>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h3>Data Produk</h3>
+        <a href="/produk/tambah" class="btn btn-sm btn-primary">Tambah Produk</a>
+        <hr/>
+        <div>
+            <h3>Filter Produk</h3>
+            <h4>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                Cari Produk Berdasarkan:
+            </h4> 
+            <form action="/produk">
+                <div class="form-group">
+                    <label for="">Nama Produk</label>
+                    <input type="text" name="nama" class="form-control">
+                </div>
+                <span>Rentang Harga</span>
+                <div class="form-group">
+                    <label for="">Harga Minimum</label>
+                    <input type="number" name="hargaMin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Harga Maximum</label>
+                    <input type="number" name="hargaMax" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Jumlah</label>
+                    <input type="number" name="jumlah" class="form-control">
+                </div>
+    
+                <!-- <div class="form-group">
+                  <button class="btn btn-primary btn-block" type="submit">Terapkan Filter</button> 
+                </div> -->
+            <!-- </form> -->
+            
+        <!-- </div> -->
+        <!-- <hr/> -->
+        <!-- <div> -->
+            <!-- <form action="/produk"> -->
+                <div class="form-group">
+                   <h4> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+                    </svg> Urutkan Produk Berdasarkan:
+                    </h4>  
+                    <select name="sort" class="form-control" id="">
+                        <option value="">Pilih Urutan</option>
+                        <option value="nama_asc">Nama, dari A ke Z</option>
+                        <option value="nama_desc">Nama, dari Z ke A</option>
+                        <option value="harga_asc">Harga, dari terkecil</option>
+                        <option value="harga_desc">Harga, dari terbesar</option>
+                        <option value="jumlah_asc">Jumlah, dari terkecil</option>
+                        <option value="jumlah_desc">Jumlah, dari terbesar</option>
+                    </select>
+                </div>
+                <!-- <div class="form-group">
+                  <button class="btn btn-primary btn-block" type="submit">Terapkan Urutan</button> 
+                </div> -->
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Terapkan Filter</button> 
+                </div>
+            </form>
+            <!-- <a href="/produk?sort=nama">Nama</a>
+            <a href="/produk?sort=harga">Harga</a>
+            <a href="/produk?sort=jumlah">Jumlah</a> -->
+        </div>
+        <table class="table table-sriped table-hover">
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Keterangan</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .produks}}
+                <tr>
+                    <td>{{.Nama}}</td>
+                    <td>{{.Keterangan}}</td>
+                    <td>{{.Harga}}</td>
+                    <td>{{.Jumlah}}</td>
+                    <td>
+                        <a href="/produk/ubah?id={{.ID}}"  class="btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                          </svg> </a>
+                        <a href="/produk/hapus?id={{.ID}}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                          </svg> </a>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
